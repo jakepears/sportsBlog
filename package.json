@@ -1,0 +1,19 @@
+{
+	"name": "sportsblog",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node server.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"dotenv": "^16.4.5",
+		"express-handlebars": "^7.1.2",
+		"handlebars": "^4.7.8",
+		"puppeteer": "^22.8.0",
+		"sequelize": "^6.37.3"
+	}
+}
