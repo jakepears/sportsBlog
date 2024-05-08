@@ -1,11 +1,6 @@
-/**
- * @format
- * @type {import('tailwindcss').Config}
- */
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: ['./views/**/*.handlebars'],
-  content: [],
+  content: ['./views/**/*.handlebars', './views/layouts/**/*.handlebars'],
   theme: {
     colors: {
       blue: '#1fb6ff',
@@ -23,7 +18,11 @@ module.exports = {
       sans: ['Roboto', 'sans'],
       serif: ['Roboto', 'serif'],
     },
-    extend: {},
+    extend: {
+      animation: {
+        underline: 'underline 0.35s cubic-bezier(0.465, 0.183, 0.153, 0.946)',
+      },
+    },
   },
   plugins: [],
 };
