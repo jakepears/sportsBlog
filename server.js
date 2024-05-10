@@ -10,17 +10,6 @@ app.set('views', './views');
 app.get('/', (req, res) => {
   res.render('home');
 });
-// // Set the Content-Type header for all CSS files
-// app.use(
-//   '/css',
-//   express.static(path.join(__dirname, 'public', 'css'), {
-//     setHeaders: (res, path) => {
-//       if (path.endsWith('.css')) {
-//         res.setHeader('Content-Type', 'text/css');
-//       }
-//     },
-//   })
-// );
 
 app.use(express.static(path.join(__dirname, 'public')));
 

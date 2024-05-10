@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .hoverUnderline {
+    @apply relative;
+  }
+  .hoverUnderline::after {
+    @apply border-b-2 border-grayLight;
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 99%;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.35s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+  }
+  .hoverUnderline:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  .hoverUnderlineDark {
+    @apply relative;
+  }
+  .hoverUnderlineDark::after {
+    @apply border-b-2 border-grayDark;
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 99%;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.35s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+  }
+  .hoverUnderlineDark:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+}
