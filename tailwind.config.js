@@ -18,11 +18,6 @@ module.exports = {
       sans: ['Roboto', 'sans'],
       serif: ['Roboto', 'serif'],
     },
-    extend: {
-      animation: {
-        underline: 'underline 0.35s cubic-bezier(0.465, 0.183, 0.153, 0.946)',
-      },
-    },
   },
   plugins: [],
 };

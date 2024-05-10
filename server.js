@@ -1,28 +1,22 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-var exphbs = require('express-handlebars');
+const hbs = require('express-handlebars');
 
-app.engine('handlebars', exphbs.engine());
+app.engine('handlebars', hbs.engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.render('home');
+  res.render('home', {
+    showFeed: true,
+  });
 });
-// // Set the Content-Type header for all CSS files
-// app.use(
-//   '/css',
-//   express.static(path.join(__dirname, 'public', 'css'), {
-//     setHeaders: (res, path) => {
-//       if (path.endsWith('.css')) {
-//         res.setHeader('Content-Type', 'text/css');
-//       }
-//     },
-//   })
-// );
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.get('/article', (req, res) => {
+  res.render('article', {});
+});
 
 // Start the server
 app.listen(3000, () => {
