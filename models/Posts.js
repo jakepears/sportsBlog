@@ -47,7 +47,7 @@ Posts.belongsTo(Users, {
 // association with the Comments model
 Posts.hasMany(Comments, {
   foreignKey: 'post_id',
-  as: 'comments', 
+  as: 'comments',
 });
 
 module.exports = Posts;
