@@ -18,6 +18,16 @@ app.get('/article', (req, res) => {
   res.render('article', {});
 });
 
+app.get('/login', (req, res) => {
+  res.render('auth/login', {
+    showLogin: true,
+  });
+});
+
+app.get('/signup', (req, res) => {
+  res.render('auth/signup', {});
+});
+
 // Start the server
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
