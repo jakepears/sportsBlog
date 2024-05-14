@@ -6,6 +6,9 @@ const bcrypt = require('bcrypt');
 const User = require('./models/Users');
 const app = express();
 
+const port = process.env.PORT || 3000;
+
+
 // Configure multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -68,6 +71,7 @@ app.post('/upload', upload.single('profilePic'), async (req, res) => {
 });
 
 // Start server
-app.listen(3000, () => {
+app.listen(port, () => {
+
   console.log('Server is running on http://localhost:3000');
 });

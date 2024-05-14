@@ -61,5 +61,6 @@ Posts.hasMany(Comments, {
   as: 'comments',
 });
 
+
 // Export the Posts model for use in other parts of the application
 module.exports = Posts;
