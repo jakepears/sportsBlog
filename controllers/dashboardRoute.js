@@ -1,25 +1,24 @@
 const router = require('express').Router();
-const { Posts, Comments, Users} = require('../models');
+const { Posts, Comments, Users } = require('../models');
 const { withGuard } = require('../utils/authGuard');
 
+// Route for the dashboard page
 router.get('/', withGuard, async (req, res) => {
   try {
+    // Fetch all posts for the logged-in user with associated User and Comment data
     const postData = await Posts.findAll({
-      where: {
-        userId: req.session.user_id,
-      },
+      where: { userId: req.session.user_id },
       include: [
         Users,
-        {
-          model: Comments,
-          include: [Users],
-        },
+        { model: Comments, include: [Users] },
       ],
-      order: [['createdAt', 'DESC']],
+      order: [['createdAt', 'DESC']], // Order posts by creation date in descending order
     });
 
+    // Convert the fetched posts to plain JavaScript objects
     const posts = postData.map((post) => post.get({ plain: true }));
 
+    // Render the dashboard template with the fetched posts, dashboard flag, and login status
     res.render('dashboard', {
       dashboard: true,
       posts,
@@ -30,27 +29,31 @@ router.get('/', withGuard, async (req, res) => {
   }
 });
 
+// Route for creating a new post
 router.get('/new', withGuard, (req, res) => {
+  // Render the newPost template with the dashboard flag and login status
   res.render('newPost', {
     dashboard: true,
     loggedIn: req.session.logged_in,
   });
 });
 
+// Route for editing a specific post
 router.get('/edit/:id', withGuard, async (req, res) => {
   try {
+    // Fetch a specific post by its ID with associated User and Comment data
     const postData = await Post.findByPk(req.params.id, {
       include: [
         Users,
-        {
-          model: Comments,
-          include: [Users],
-        },
+        { model: Comments, include: [Users] },
       ],
     });
 
     if (postData) {
+      // If the post exists, convert it to a plain JavaScript object
       const post = postData.get({ plain: true });
+
+      // Render the editPost template with the fetched post, dashboard flag, and login status
       res.render('editPost', {
         dashboard: true,
         post,
