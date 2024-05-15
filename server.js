@@ -4,7 +4,10 @@ const hbs = require('express-handlebars');
 const multer = require('multer');
 const bcrypt = require('bcrypt');
 const User = require('./models/Users');
+const rememberMeRoutes = require('./controllers/api/rememberMeRoutes');
 const app = express();
+
+app.use('/remember-me', rememberMeRoutes);
 
 // Configure multer storage
 const storage = multer.diskStorage({
