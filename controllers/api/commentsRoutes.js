@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const { Comments, Users, Posts } = require('../../models');
-const withAuth = require('../../utils/authGuard');
+const { withGuard } = require('../../utils/authGuard');
 
 // Create a new comment
-router.post('/', withAuth, async (req, res) => {
+router.post('/', withGuard, async (req, res) => {
   try {
     const { content, postId } = req.body;
 
@@ -48,7 +48,7 @@ router.get('/:postId', async (req, res) => {
   });
 
 // Update a comment
-router.put('/:id', withAuth, async (req, res) => {
+router.put('/:id', withGuard, async (req, res) => {
   try {
     const { content } = req.body;
 
@@ -73,7 +73,7 @@ router.put('/:id', withAuth, async (req, res) => {
 });
 
 // Delete a comment
-router.delete('/:id', withAuth, async (req, res) => {
+router.delete('/:id', withGuard, async (req, res) => {
   try {
     const commentsData = await Comments.findByPk(req.params.id);
 
