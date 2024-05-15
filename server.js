@@ -45,6 +45,10 @@ app.get('/signup', (req, res) => {
   res.render('auth/signup', {});
 });
 
+app.get('/createPost', (req, res) => {
+  res.render('auth/signup', {});
+});
+
 app.post('/upload', upload.single('profilePic'), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No file uploaded' });
