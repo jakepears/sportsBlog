@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
         {
           model: Users,
           as: 'user',
-          attributes: ['username'],
+          attributes: ['name', 'profilePicture'],
         },
         {
           model: Comments,
@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
             {
               model: Users,
               as: 'user',
-              attributes: ['username'],
+              attributes: ['name', 'profilePicture'],
             },
           ],
         },
@@ -63,7 +63,7 @@ router.get('/:id', async (req, res) => {
         {
           model: Users,
           as: 'user',
-          attributes: ['username'],
+          attributes: ['name', 'profilePicture'],
         },
         {
           model: Comments,
@@ -72,7 +72,7 @@ router.get('/:id', async (req, res) => {
             {
               model: Users,
               as: 'user',
-              attributes: ['username'],
+              attributes: ['name', 'profilePicture'],
             },
           ],
         },

@@ -1,42 +1,50 @@
 const router = require('express').Router();
 const { Users } = require('../../models');
 const { Op } = require('sequelize');
+const upload = require('../../config/multerConfig');
 
 // Create a new user
-router.post('/', async (req, res) => {
-    try {
-      const { email, username, password } = req.body;
-  
-      // Check if all required fields are present
-      if (!email || !username || !password) {
-        res.status(400).json({ message: 'Email, username, and password are required' });
-        return;
-      }
-  
-      // Check if the email or username already exists
-      const existingUser = await Users.findOne({
-        where: {
-          [Op.or]: [{ email }, { username }],
-        },
-      });
-  
-      if (existingUser) {
-        res.status(400).json({ message: 'Email or username already exists' });
-        return;
-      }
-  
-      const usersData = await Users.create({ email, username, password });
-  
-      req.session.save(() => {
-        req.session.user_id = usersData.id;
-        req.session.username = usersData.username;
-        req.session.logged_in = true;
-        res.status(200).json(usersData);
-      });
-    } catch (err) {
-      res.status(400).json(err);
+router.post('/signup', upload.single('profilePicture'), async (req, res) => {
+  try {
+    const { email, username, password } = req.body;
+    
+    // Check if all required fields are present
+    if (!email || !username || !password) {
+      res.status(400).json({ message: 'Email, username, and password are required' });
+      return;
     }
-  });
+    
+    // Check if the email or username already exists
+    const existingUser = await Users.findOne({
+      where: {
+        [Op.or]: [{ email }, { username }],
+      },
+    });
+    
+    if (existingUser) {
+      res.status(400).json({ message: 'Email or username already exists' });
+      return;
+    }
+    
+    const profilePicture = req.file ? req.file.path : null;
+    
+    const usersData = await Users.create({
+      email,
+      username,
+      password,
+      profilePicture,
+    });
+    
+    req.session.save(() => {
+      req.session.user_id = usersData.id;
+      req.session.username = usersData.username;
+      req.session.logged_in = true;
+      res.status(200).json(usersData);
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
 // User login
 router.post('/login', async (req, res) => {
