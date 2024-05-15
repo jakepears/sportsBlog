@@ -38,6 +38,7 @@ Posts.init(
     freezeTableName: true,
     underscored: true,
     modelName: 'posts',
+    tableName: 'posts',
   }
 );
 
