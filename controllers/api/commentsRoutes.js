@@ -36,7 +36,7 @@ router.get('/:postId', async (req, res) => {
           {
             model: Users,
             as: 'user',
-            attributes: ['username'],
+            attributes: ['name', 'profilePicture'],
           },
         ],
       });

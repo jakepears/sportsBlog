@@ -13,7 +13,9 @@ Users.hasMany(Posts, {
 
 // A post belongs to a single user (One-to-One)
 Posts.belongsTo(Users, {
-  foreignKey: 'user_id',   
+  foreignKey: 'user_id',
+  as: 'user',
+  include: ['profilePicture'],   
 });
 
 // A user can have multiple comments (One-to-Many)
@@ -24,18 +26,22 @@ Users.hasMany(Comments, {
 
 // A comment belongs to a single user (One-to-One)
 Comments.belongsTo(Users, {
-  foreignKey: 'user_id',    
+  foreignKey: 'user_id',
+  as: 'user',
+  include: ['profilePicture'],    
 });
 
 // A post can have multiple comments (One-to-Many)
 Posts.hasMany(Comments, {
   foreignKey: 'post_id',    // The foreign key in the Comments model that references the Posts model
+  as: 'comments',
   onDelete: 'CASCADE',      
 });
 
 // A comment belongs to a single post (One-to-One)
 Comments.belongsTo(Posts, {
-  foreignKey: 'post_id',    
+  foreignKey: 'post_id',
+  as: 'post',    
 });
 
 // Export the models

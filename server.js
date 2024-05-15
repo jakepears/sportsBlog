@@ -1,28 +1,40 @@
 const express = require('express');
+const sequelize = require('./config/config');
+const SequelizeStore = require('connect-session-sequelize');
 const path = require('path');
 const hbs = require('express-handlebars');
-const multer = require('multer');
 const bcrypt = require('bcrypt');
 const User = require('./models/Users');
+const routes = require('./controllers');
+const helpers = require('./utils/helpers');
 const app = express();
 
 const port = process.env.PORT || 3000;
 
-// Configure multer storage
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Specify the upload directory
-  },
-  filename: function (req, file, cb) {
-    cb(null, `${Date.now()}-${file.originalname}`); // Generate a unique filename
-  },
-});
+const exphbs = hbs.create({ helpers });
 
-const upload = multer({ storage: storage });
+const sess = {
+  secret: 'Super secret secret',
+  cookie: {
+    maxAge: 300000,
+    httpOnly: true,
+    secure: false,
+    sameSite: 'strict',
+  },
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize,
+  }),
+};
 
-app.engine('handlebars', hbs.engine());
+app.use(session(sess));
+app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
+app.use(routes);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
@@ -31,8 +43,8 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/article', (req, res) => {
-  res.render('article', {});
+app.get('/posts', (req, res) => {
+  res.render('posts', {});
 });
 
 app.get('/login', (req, res) => {
@@ -73,7 +85,10 @@ app.post('/upload', upload.single('profilePic'), async (req, res) => {
   }
 });
 
+
 // Start server
-app.listen(port, () => {
-  console.log('Server is running on http://localhost:3000');
+sequelize.sync({ force: false }).then(() => {
+  app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+  });
 });
