@@ -1,13 +1,10 @@
-// Import required modules
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/config');
 
 // Define the User model class that extends the Sequelize Model class
 class User extends Model {
-  // Define a custom instance method to check the password
   checkPassword(loginPw) {
-    // Use bcrypt to compare the provided password with the hashed password stored in the database
     return bcrypt.compareSync(loginPw, this.password);
   }
 }
@@ -15,6 +12,12 @@ class User extends Model {
 // Initialize the User model with its attributes and options
 User.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -23,7 +26,6 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      primaryKey: true,
       validate: {
         isEmail: true,
       },
@@ -38,10 +40,13 @@ User.init(
         isDecimal: true,
       },
     },
+    profilePicture: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     hooks: {
-      // Define a hook to hash the password before creating a new user
       beforeCreate: async (newUserData) => {
         newUserData.password = await bcrypt.hash(newUserData.password, 10);
         return newUserData;
@@ -55,5 +60,4 @@ User.init(
   }
 );
 
-// Export the User model for use in other parts of the application
 module.exports = User;

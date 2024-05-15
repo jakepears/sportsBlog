@@ -1,29 +1,48 @@
 const express = require('express');
+const sequelize = require('./config/config');
+const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const path = require('path');
 const hbs = require('express-handlebars');
-const multer = require('multer');
 const bcrypt = require('bcrypt');
 const User = require('./models/Users');
-const rememberMeRoutes = require('./controllers/api/rememberMeRoutes');
+const routes = require('./controllers');
+const helpers = require('./utils/helpers');
+const upload = require('./config/multerConfig');
+const { Comments, Posts } = require('./models');
 const app = express();
 
-app.use('/remember-me', rememberMeRoutes);
+const port = process.env.PORT || 3000;
 
-// Configure multer storage
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Specify the upload directory
+const exphbs = hbs.create({ helpers });
+
+const sess = {
+  secret: 'Super secret secret',
+  cookie: {
+    maxAge: 300000,
+    httpOnly: true,
+    secure: false,
+    sameSite: 'strict',
   },
-  filename: function (req, file, cb) {
-    cb(null, `${Date.now()}-${file.originalname}`); // Generate a unique filename
-  },
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize,
+  }),
+};
+
+app.use(session(sess));
+
+app.engine('handlebars', (filePath, options, callback) => {
+  const engine = exphbs.engine();
+  engine(filePath, options, callback);
 });
 
-const upload = multer({ storage: storage });
-
-app.engine('handlebars', hbs.engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
+app.use(routes);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
@@ -32,8 +51,8 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/article', (req, res) => {
-  res.render('article', {});
+app.get('/posts', (req, res) => {
+  res.render('posts', {});
 });
 
 app.get('/login', (req, res) => {
@@ -70,7 +89,23 @@ app.post('/upload', upload.single('profilePic'), async (req, res) => {
   }
 });
 
+
 // Start server
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000');
-});
+sequelize.sync({ force: false })
+  .then(() => {
+    return User.sync();
+  })
+  .then(() => {
+    return Posts.sync();
+  })
+  .then(() => {
+    return Comments.sync();
+  })
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server is running on http://localhost:${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Error synchronizing models:', err);
+  });

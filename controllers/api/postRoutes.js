@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const { Posts, Users, Comments } = require('../../models');
-const withAuth = require('../../utils/authGuard');
+const { withGuard } = require('../../utils/authGuard');
 
 // Create a new post
-router.post('/', withAuth, async (req, res) => {
+router.post('/', withGuard, async (req, res) => {
   try {
     const { title, content } = req.body;
 
@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
         {
           model: Users,
           as: 'user',
-          attributes: ['username'],
+          attributes: ['name', 'profilePicture'],
         },
         {
           model: Comments,
@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
             {
               model: Users,
               as: 'user',
-              attributes: ['username'],
+              attributes: ['name', 'profilePicture'],
             },
           ],
         },
@@ -63,7 +63,7 @@ router.get('/:id', async (req, res) => {
         {
           model: Users,
           as: 'user',
-          attributes: ['username'],
+          attributes: ['name', 'profilePicture'],
         },
         {
           model: Comments,
@@ -72,7 +72,7 @@ router.get('/:id', async (req, res) => {
             {
               model: Users,
               as: 'user',
-              attributes: ['username'],
+              attributes: ['name', 'profilePicture'],
             },
           ],
         },
@@ -90,7 +90,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 // Update a post
-router.put('/:id', withAuth, async (req, res) => {
+router.put('/:id', withGuard, async (req, res) => {
   try {
     const { title, content } = req.body;
 
@@ -115,7 +115,7 @@ router.put('/:id', withAuth, async (req, res) => {
 });
 
 // Delete a post
-router.delete('/:id', withAuth, async (req, res) => {
+router.delete('/:id', withGuard, async (req, res) => {
   try {
     const postsData = await Posts.findByPk(req.params.id);
 

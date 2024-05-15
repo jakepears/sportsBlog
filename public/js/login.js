@@ -1,29 +1,27 @@
 const loginFormHandler = async function (event) {
     event.preventDefault();
-
-    const emailEl = document
-    .querySelector('#email-input-login')
-    .ariaValueMax.trim();
-    const passwordEl = document
-    .querySelector('#password-input-login')
-    .ariaValueMax.trim();
-
-    const response = await fetch('/api/users/login', {
+  
+    const usernameOrEmailEl = document.querySelector('#username-email-input-login').value.trim();
+    const passwordEl = document.querySelector('#password-input-login').value.trim();
+  
+    if (usernameOrEmailEl && passwordEl) {
+      const response = await fetch('/api/users/login', {
         method: 'POST',
         body: JSON.stringify({
-            email: emailEl,
-            password: passwordEl,
+          usernameOrEmail: usernameOrEmailEl,
+          password: passwordEl,
         }),
-        headers: {'Content-Type': 'application/json'},
-    });
-
-    if (response.ok) {
+        headers: { 'Content-Type': 'application/json' },
+      });
+  
+      if (response.ok) {
         document.location.replace('/');
-    } else {
+      } else {
         alert('Failed to login');
+      }
+    } else {
+      alert('Please provide a username or email and password');
     }
-};
-
-document
-    .querySelector('#login-form')
-    .addEventListener('submit', loginFormHandler);
+  };
+  
+  document.querySelector('#login-form').addEventListener('submit', loginFormHandler);
