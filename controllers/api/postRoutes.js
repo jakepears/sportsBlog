@@ -51,7 +51,8 @@ router.get('/', async (req, res) => {
 
     res.status(200).json(postsData);
   } catch (err) {
-    res.status(500).json(err);
+    console.error('Get All Posts Error:', err);
+    res.status(500).render('error', { message: 'Internal Server Error' });
   }
 });
 
@@ -86,7 +87,8 @@ router.get('/:id', async (req, res) => {
 
     res.status(200).json(postsData);
   } catch (err) {
-    res.status(500).json(err);
+    console.error('Get Single Post Error:', err);
+    res.status(500).render('error', { message: 'Internal Server Error' });
   }
 });
 // Update a post

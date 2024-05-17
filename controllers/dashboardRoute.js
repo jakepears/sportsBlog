@@ -9,8 +9,8 @@ router.get('/', withGuard, async (req, res) => {
     const postData = await Posts.findAll({
       where: { userId: req.session.user_id },
       include: [
-        Users,
-        { model: Comments, include: [Users] },
+        { model: Users, as: 'user' },
+        { model: Comments, as: 'comments', include: [{ model: Users, as: 'user' }] },
       ],
       order: [['createdAt', 'DESC']], // Order posts by creation date in descending order
     });
@@ -44,8 +44,8 @@ router.get('/edit/:id', withGuard, async (req, res) => {
     // Fetch a specific post by its ID with associated User and Comment data
     const postData = await Post.findByPk(req.params.id, {
       include: [
-        Users,
-        { model: Comments, include: [Users] },
+        { model: Users, as: 'user' },
+        { model: Comments, as: 'comments', include: [{ model: Users, as: 'user' }] },
       ],
     });
 

@@ -10,11 +10,17 @@ const routes = require('./controllers');
 const helpers = require('./utils/helpers');
 const upload = require('./config/multerConfig');
 const { Comments, Posts } = require('./models');
-const app = express();
 
+const app = express();
 const port = process.env.PORT || 3000;
 
-const exphbs = hbs.create({ helpers });
+const exphbs = hbs.create({
+  helpers,
+  partialsDir: [
+    path.join(__dirname, 'views/partials'),
+    path.join(__dirname, 'views/auth'),
+  ],
+});
 
 const sess = {
   secret: 'Super secret secret',
@@ -33,65 +39,45 @@ const sess = {
 
 app.use(session(sess));
 
-app.engine('handlebars', (filePath, options, callback) => {
-  const engine = exphbs.engine();
-  engine(filePath, options, callback);
-});
-
+// Register Handlebars engine
+app.engine('handlebars', exphbs.engine);
 app.set('view engine', 'handlebars');
-app.set('views', './views');
+app.set('views', path.join(__dirname, 'views'));
+
 app.use(routes);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
-  res.render('home', {
-    showFeed: true,
-  });
-});
-
-app.get('/posts', (req, res) => {
-  res.render('posts', {});
-});
-
-app.get('/login', (req, res) => {
-  res.render('auth/login', {
-    showLogin: true,
-  });
-});
-
-app.get('/signup', (req, res) => {
-  res.render('auth/signup', {});
-});
-
 app.post('/upload', upload.single('profilePic'), async (req, res) => {
   if (!req.file) {
-    return res.status(400).json({ error: 'No file uploaded' });
+    return res.status(400).render('error', { message: 'No file uploaded' });
   }
 
   // Access uploaded file info
   const filePath = req.file.path;
 
-  // Create new user instance with file path
+  // Create new user instance with required fields
   const newUser = new User({
-    // Other user data fields
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
     profilePicture: filePath,
   });
 
   try {
     // Save user to database
     await newUser.save();
-    res.json({ success: true, fileInfo: req.file });
+    res.redirect('/profile'); // Redirect to profile page or any other appropriate page
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to save user' });
+    console.error('Failed to save user:', err);
+    res.status(500).render('error', { message: 'Failed to save user' });
   }
 });
 
-
 // Start server
-sequelize.sync({ force: false })
+sequelize
+  .sync({ force: false })
   .then(() => {
     return User.sync();
   })
