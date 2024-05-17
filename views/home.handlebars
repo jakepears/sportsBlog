@@ -1,11 +1,14 @@
-{{>topicNav}}
-
-{{#if showFeed}}
-{{>posts}}
+{{#if posts.length}}
+<ul>
+  {{#each posts}}
+  <li>
+    <h2>{{title}}</h2>
+    <p>{{content}}</p>
+    <p>Posted by: {{user.name}}</p>
+    <!-- Display comments and other post-related data -->
+  </li>
+  {{/each}}
+</ul>
+{{else}}
+<p>No posts found.</p>
 {{/if}}
-
-{{#if showLogin}}
-{{>login}}
-{{/if}}
-
-{{>footer}}

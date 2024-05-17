@@ -14,11 +14,11 @@ const seedDatabase = async () => {
 
   const posts = await Promise.all(
     postData.map(async (post) => {
-      const user = users.find((user) => user.id === post.userId);
+      const user = users.find((user) => user.id === post.user_id);
       if (user) {
         const newPost = await Posts.create({
           ...post,
-          userId: user.id,
+          user_id: user.id,
         });
         return newPost;
       }
@@ -27,13 +27,13 @@ const seedDatabase = async () => {
 
   const comments = await Promise.all(
     commentData.map(async (comment) => {
-      const user = users.find((user) => user.id === comment.userId);
-      const post = posts.find((post) => post.id === comment.postId);
+      const user = users.find((user) => user.id === comment.user_id);
+      const post = posts.find((post) => post.id === comment.post_id);
       if (user && post) {
         const newComment = await Comments.create({
           ...comment,
-          userId: user.id,
-          postId: post.id,
+          user_id: user.id,
+          post_id: post.id,
         });
         return newComment;
       }
