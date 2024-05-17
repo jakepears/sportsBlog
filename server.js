@@ -85,7 +85,6 @@ app.post('/upload', upload.single('profilePic'), async (req, res) => {
   }
 });
 
-
 // Start server
 sequelize.sync({ force: false }).then(() => {
   app.listen(port, () => {

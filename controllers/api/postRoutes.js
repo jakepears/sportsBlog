@@ -1,9 +1,15 @@
-const router = require('express').Router();
+const { Router } = require('express');
+const router = Router();
 const { Posts, Users, Comments } = require('../../models');
-const withAuth = require('../../utils/authGuard');
+const { withAuth } = require('../../utils/authGuard');
 
-// Create a new post
-router.post('/', withAuth, async (req, res) => {
+router.post('/', withAuth, (req, res, next) => {
+  // Call the route handler function
+  createPost(req, res, next);
+});
+
+// Route handler function
+const createPost = async (req, res) => {
   try {
     const { title, content } = req.body;
 
@@ -23,7 +29,7 @@ router.post('/', withAuth, async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
-});
+};
 
 // Get all posts
 router.get('/', async (req, res) => {
@@ -102,7 +108,9 @@ router.put('/:id', withAuth, async (req, res) => {
     }
 
     if (postsData.user_id !== req.session.user_id) {
-      res.status(403).json({ message: 'You are not authorized to update this post' });
+      res
+        .status(403)
+        .json({ message: 'You are not authorized to update this post' });
       return;
     }
 
@@ -125,7 +133,9 @@ router.delete('/:id', withAuth, async (req, res) => {
     }
 
     if (postsData.user_id !== req.session.user_id) {
-      res.status(403).json({ message: 'You are not authorized to delete this post' });
+      res
+        .status(403)
+        .json({ message: 'You are not authorized to delete this post' });
       return;
     }
 

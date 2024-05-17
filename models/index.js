@@ -7,20 +7,20 @@ const Comments = require('./Comments');
 
 // A user can have multiple posts (One-to-Many)
 Users.hasMany(Posts, {
-  foreignKey: 'user_id',    // The foreign key in the Posts model that references the Users model
-  onDelete: 'CASCADE',      // Delete all associated posts when a user is deleted
+  foreignKey: 'user_id', // The foreign key in the Posts model that references the Users model
+  onDelete: 'CASCADE', // Delete all associated posts when a user is deleted
 });
 
 // A post belongs to a single user (One-to-One)
 Posts.belongsTo(Users, {
   foreignKey: 'user_id',
   as: 'user',
-  include: ['profilePicture'],   
+  include: ['profilePicture'],
 });
 
 // A user can have multiple comments (One-to-Many)
 Users.hasMany(Comments, {
-  foreignKey: 'user_id',    // The foreign key in the Comments model that references the Users model
+  foreignKey: 'user_id', // The foreign key in the Comments model that references the Users model
   onDelete: 'CASCADE',
 });
 
@@ -28,20 +28,20 @@ Users.hasMany(Comments, {
 Comments.belongsTo(Users, {
   foreignKey: 'user_id',
   as: 'user',
-  include: ['profilePicture'],    
+  include: ['profilePicture'],
 });
 
 // A post can have multiple comments (One-to-Many)
 Posts.hasMany(Comments, {
-  foreignKey: 'post_id',    // The foreign key in the Comments model that references the Posts model
+  foreignKey: 'post_id', // The foreign key in the Comments model that references the Posts model
   as: 'comments',
-  onDelete: 'CASCADE',      
+  onDelete: 'CASCADE',
 });
 
 // A comment belongs to a single post (One-to-One)
 Comments.belongsTo(Posts, {
   foreignKey: 'post_id',
-  as: 'post',    
+  as: 'post',
 });
 
 // Export the models
