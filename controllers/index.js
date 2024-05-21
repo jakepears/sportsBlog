@@ -5,17 +5,17 @@ const upload = require('../config/multerConfig');
 const uploadController = require('./uploadController');
 const profileController = require('./profileController');
 const homeRoutes = require('./homeRoute');
-const dashboardRoutes = require('./dashboardRoute');
-const apiRoutes = require('./api/index');
+const articleRoutes = require('./articleRoute');
+const apiRoutes = require('./api/');
 
 // Home routes
 router.use('/', homeRoutes);
 
 // Dashboard routes
-router.use('/dashboard', dashboardRoutes);
+router.use('/', articleRoutes);
 
 // API routes
-router.use('/api', apiRoutes);
+router.use('/', apiRoutes);
 
 // Upload route
 router.post('/upload', upload.single('profilePic'), uploadController.uploadProfilePicture);

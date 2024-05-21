@@ -17,10 +17,10 @@ router.get('/', async (req, res) => {
       order: [['createdAt', 'DESC']],
     });
 
-    console.log('postData:', postData); // Add this line
+    console.log('postData:', postData); 
 
     const posts = postData.map((post) => {
-      console.log('Mapping post:', post); // Add this line
+      console.log('Mapping post:', post);
       return post.get({ plain: true });
     });
 
