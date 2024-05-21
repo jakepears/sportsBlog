@@ -42,7 +42,8 @@ router.post('/signup', upload.single('profilePicture'), async (req, res) => {
       res.status(200).json(usersData);
     });
   } catch (err) {
-    res.status(400).json(err);
+    console.error('Error during signup:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 

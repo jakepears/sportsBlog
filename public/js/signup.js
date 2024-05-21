@@ -7,7 +7,7 @@ const signupFormHandler = async function (event) {
     const confirmPasswordEl = document.querySelector('#confirm-password-input-signup').value.trim();
   
     if (usernameEl && emailEl && passwordEl.length >= 8 && passwordEl === confirmPasswordEl) {
-      const response = await fetch('/api/users', {
+      const response = await fetch('/signup', {
         method: 'POST',
         body: JSON.stringify({
           username: usernameEl,
