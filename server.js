@@ -5,7 +5,6 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const path = require('path');
 const hbs = require('express-handlebars');
 const bcrypt = require('bcrypt');
-const { Users } = require('./models');
 const routes = require('./controllers');
 const helpers = require('./utils/helpers');
 
