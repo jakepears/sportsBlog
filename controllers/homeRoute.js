@@ -52,7 +52,7 @@ router.get('/post/:id', async (req, res) => {
       // If the post exists, convert it to a plain JavaScript object
       const post = postData.get({ plain: true });
       // Render the post template with the fetched post and login status
-      res.render('post', {
+      res.render('partials/posts', {
         post,
         loggedIn: req.session.logged_in,
       });
@@ -69,7 +69,7 @@ router.get('/post/:id', async (req, res) => {
 router.get('/login', withoutGuard, (req, res) => {
   try {
     // Render the login template
-    res.render('login');
+    res.render('auth/login');
   } catch (err) {
     res.status(500).json(err);
   }
@@ -79,9 +79,10 @@ router.get('/login', withoutGuard, (req, res) => {
 router.get('/signup', withoutGuard, (req, res) => {
   try {
     // Render the signup template
-    res.render('signup');
+    res.render('auth/signup');
   } catch (err) {
-    res.status(500).json(err);
+    console.error('Signup Route Error:', err);
+    res.status(500).render('error', { message: 'Internal Server Error' });
   }
 });
 
