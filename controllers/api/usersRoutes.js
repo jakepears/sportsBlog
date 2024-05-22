@@ -50,36 +50,40 @@ router.post('/signup', upload.single('profilePicture'), async (req, res) => {
 // User login
 router.post('/login', async (req, res) => {
     try {
-      const { usernameOrEmail, password } = req.body;
-  
+      const { email, password } = req.body;
+
       // Find the user by username or email
       const usersData = await Users.findOne({
         where: {
           [Op.or]: [
-            { username: usernameOrEmail },
-            { email: usernameOrEmail }
+            { email: email }
           ]
         }
       });
-  
       if (!usersData) {
-        res.status(400).json({ message: 'Incorrect username/email or password, please try again' });
+        res.status(400).json({ message: 'No User Data' });
         return;
       }
-  
+      console.log(usersData.password);
       const validPassword = await usersData.checkPassword(password);
-  
+      console.log(validPassword,"---------");
+
       if (!validPassword) {
-        res.status(400).json({ message: 'Incorrect username/email or password, please try again' });
+       res.status(400).json({ message: 'Incorrect username/email or password, please try again' });
         return;
       }
   
-      req.session.save(() => {
+      req.session.save(function(err){
         req.session.user_id = usersData.id;
         req.session.username = usersData.username;
         req.session.logged_in = true;
-        res.status(200).json({ usersData, message: 'You are now logged in!' });
+        if(err) console.log(err);
+        res.render('home',{ usersData, message: 'You are now logged in!' });
+        //res.status(200).json({ usersData, message: 'You are now logged in!' });
       });
+      console.log("session.saved");
+      console.log(req.session);
+      console.log("session.saved");
     } catch (err) {
       res.status(400).json(err);
     }

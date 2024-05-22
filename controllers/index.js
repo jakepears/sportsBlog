@@ -15,7 +15,7 @@ router.use('/', homeRoutes);
 router.use('/', articleRoutes);
 
 // API routes
-router.use('/', apiRoutes);
+router.use('/api', apiRoutes);
 
 // Upload route
 router.post('/upload', upload.single('profilePic'), uploadController.uploadProfilePicture);
