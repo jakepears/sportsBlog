@@ -12,7 +12,7 @@
       <nav>
         <ul class='flex items-center justify-between font-bold text-sm text-grayLight bg-none uppercase no-underline'>
           <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/'>Home</a></li>
-          <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/posts'>Posts</a></li>
+          <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/api/posts'>Posts</a></li>
           {{#if loggedIn}}
             <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/dashboard'>Dashboard</a></li>
             <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' id="logout" href='/logout'>Logout</a></li>
@@ -34,9 +34,13 @@
       <p class='text-lg text-grayDark'>
         An awesome boot camp project by four engineers!
       </p>
+      <p>{{message}}</p>
     </div>
   </header>
 
   {{{body}}}
+      {{#if loggedIn}}
+      <script src='/js/logout.js'></script>
+    {{/if}}
 </body>
 </html>
