@@ -11,8 +11,10 @@ module.exports = {
 
     return `<span for="img" aria-label="book">${book}</span>`;
   },
-  formatDate: (date) => {
-    // Format date as MM/DD/YYYY
-    return date.toLocaleDateString();
+  formatDate: function (date) {
+    if (date && typeof date.toLocaleDateString === 'function') {
+      return date.toLocaleDateString();
+    }
+    return ''; // Return an empty string if the date is undefined or invalid
   },
 };

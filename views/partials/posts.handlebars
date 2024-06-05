@@ -1,90 +1,26 @@
 <div class='container mx-auto flex flex-wrap py-12'>
   <section class='w-full md:w-2/3 flex flex-col items-center px-3'>
-
-    <article class=' bg-offWhite flex flex-col betterShadow my-4 opacity-90 hover:opacity-100 transition-opacity duration-[250ms] ease-in-out'>
-      <a href='/article'>
-        <img
-          src='https://images.unsplash.com/photo-1584770557404-a5d2a798e81a?q=80&w=2647&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-        />
+    {{#each posts}}
+    <article class='bg-offWhite flex flex-col betterShadow my-4 opacity-90 hover:opacity-100 transition-opacity duration-[250ms] ease-in-out'>
+      <a href='/article/{{id}}'>
+        <img src='{{imageUrl}}' />
       </a>
       <div class='bg-white flex flex-col justify-start p-6'>
-        <p
-          class='text-blue text-md font-bold uppercase pb-4'
-        >Basketball</p>
-        <a href='#' class='text-3xl font-bold pb-4'>Some
-          text about kobe</a>
+        <p class='text-blue text-md font-bold uppercase pb-4'>{{category}}</p>
+        <a href='/article/{{id}}' class='text-3xl font-bold pb-4'>{{title}}</a>
         <p class='text-sm pb-3'>
           By
-          <p class='font-semibold'>Author</p>,
-          Published on
+          <p class='font-semibold'>{{user.name}}</p>,
+          Published on {{formatDate createdAt}}
         </p>
-        <p class='pb-6'>Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Vivamus quis porta dui. Ut eu iaculis massa. Sed
-          ornare ligula lacus, quis iaculis dui porta volutpat. In sit amet
-          posuere magna..</p>
-        <a
-          href='/article'
-          class='uppercase text-grayDark'
-        ><p class="hoverUnderlineDark w-fit">Continue Reading</p>
+        <p class='pb-6'></p>
+        <a href='/article/{{id}}' class='uppercase text-grayDark'>
+          <p class="hoverUnderlineDark w-fit">Continue Reading</p>
         </a>
       </div>
     </article>
-
-    <article class=' bg-offWhite flex flex-col betterShadow my-4 opacity-90 hover:opacity-100 transition-opacity duration-[250ms] ease-in-out'>
-      <a href='/article'>
-        <img
-          src='https://images.unsplash.com/photo-1624375664562-fff61869fe8f?q=80&w=2662&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-        />
-      </a>
-      <div class='bg-white flex flex-col justify-start p-6'>
-        <p class='text-blue text-sm font-bold uppercase pb-4'>MLB</p>
-        <p class='text-3xl font-bold pb-4'>Some text about baseball</p>
-        <p class='text-sm pb-3'>
-          By
-          <p class='font-semibold'>Author</p>,
-          Published on January 12th,
-        </p>
-        <p class='pb-6'>Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Vivamus quis porta dui. Ut eu iaculis massa. Sed
-          ornare ligula lacus, quis iaculis dui porta volutpat. In sit amet
-          posuere magna..</p>
-        <a
-          href='/article'
-          class='uppercase text-grayDark'
-        ><p class="hoverUnderlineDark w-fit">Continue Reading</p>
-        </a>
-      </div>
-    </article>
-
-    <article class=' bg-offWhite flex flex-col betterShadow my-4 opacity-90 hover:opacity-100 transition-opacity duration-[250ms] ease-in-out'>
-      <a href='/article'>
-        <img
-          src='https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-        />
-      </a>
-      <div class='bg-white flex flex-col justify-start p-6'>
-        <p
-          class='text-blue text-sm font-bold uppercase pb-4'
-        >Sports</p>
-        <p class='text-3xl font-bold pb-4'>Lorem
-          Ipsum Dolor Sit Amet Dolor Sit Amet</p>
-        <p class='text-sm pb-3'>
-          By
-          <p class='font-semibold'>Author</p>,
-          Published on October 22nd,
-        </p>
-        <p class='pb-6'>Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Vivamus quis porta dui. Ut eu iaculis massa. Sed
-          ornare ligula lacus, quis iaculis dui porta volutpat. In sit amet
-          posuere magna..</p>
-        <a
-          href='/article'
-          class='uppercase text-grayDark'
-        ><p class="hoverUnderlineDark w-fit">Continue Reading</p>
-        </a>
-      </div>
-    </article>
-{{>pagination}}
+    {{/each}}
+    {{>pagination}}
   </section>
- {{>sidebar}}
+  {{>sidebar}}
 </div>
