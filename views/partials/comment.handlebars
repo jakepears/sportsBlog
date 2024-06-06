@@ -1,10 +1,8 @@
-<div class='bg-grayLight border border-grayDark'>
-  <p class='text-grayDark'>
-    {{body}}
+<div class='bg-offWhite border border-grayDark p-4 mb-4'>
+  <p class='text-grayDark mb-2'>
+    {{content}}
   </p>
-  <p class='text-grayDark'>
-    &mdash;
-    {{user.username}},
-    {{formatDate createdAt}}
+  <p class='text-grayDark text-sm'>
+    &mdash; {{user.name}}, {{formatDate createdAt}}
   </p>
 </div>

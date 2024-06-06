@@ -1,52 +1,30 @@
 <html lang='en'>
-  <head>
-    <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <link rel='stylesheet' href='/css/styles.css' />
-    <title>Sporty</title>
-  </head>
-  <body class='bg-grayLight'>
-    <!-- Top Bar Nav -->
-    <nav class='w-full py-4 bg-grayDark betterShadow'>
-      <div
-        class='w-full container mx-auto flex flex-wrap items-center justify-around'
-      >
-        <nav>
-          <ul
-            class='flex items-center justify-between font-bold text-sm text-grayLight bg-none uppercase no-underline'
-          >
-            <li class='px-4'><a
-                class='transition-colors hoverUnderline duration-200 px-1'
-                href='/'
-              >Home</a></li>
-            <li class='px-4'><a
-                class='transition-colors hoverUnderline duration-200 px-1'
-                href='/posts'
-              >Posts</a></li>
-            {{#if loggedIn}}
-              <li class='px-4'><a
-                  class='transition-colors hoverUnderline duration-200 px-1'
-                  href='/dashboard'
-                >Dashboard</a></li>
-              <li class='px-4'><a
-                  class='transition-colors hoverUnderline duration-200 px-1'
-                  id='logout'
-                  href='/logout'
-                >Logout</a></li>
-            {{else}}
-              <li class='px-4'><a
-                  class='transition-colors hoverUnderline duration-200 px-1'
-                  href='/login'
-                >Login</a></li>
-              <li class='px-4'><a
-                  class='transition-colors hoverUnderline duration-200 px-1'
-                  href='/signup'
-                >Signup</a></li>
-            {{/if}}
-          </ul>
-        </nav>
-      </div>
-    </nav>
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <link rel='stylesheet' href='/css/styles.css' />
+  <title>Sporty</title>
+</head>
+<body class='bg-grayLight'>
+  <!-- Top Bar Nav -->
+  <nav class='w-full py-4 bg-grayDark betterShadow'>
+    <div class='w-full container mx-auto flex flex-wrap items-center justify-around'>
+      <nav>
+        <ul class='flex items-center justify-between font-bold text-sm text-grayLight bg-none uppercase no-underline'>
+          <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/'>Home</a></li>
+          <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/api/posts'>Posts</a></li>
+          {{#if loggedIn}}
+            <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/article'>Article</a></li>
+            <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/posts'>Create Post</a></li>
+            <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' id="logout" href='/logout'>Logout</a></li>
+          {{else}}
+            <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/login'>Login</a></li>
+            <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/signup'>Signup</a></li>
+          {{/if}}
+        </ul>
+      </nav>
+    </div>
+  </nav>
 
     <!-- Text Header -->
     <header class='w-full container mx-auto'>
