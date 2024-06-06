@@ -26,22 +26,25 @@
     </div>
   </nav>
 
-  <!-- Text Header -->
-  <header class='w-full container mx-auto'>
-    <div class='flex flex-col items-center py-10'>
-      <a class='font-bold text-grayDark uppercase opacity-90 hover:opacity-100 transition-all duration-200 ease-in-out text-5xl pb-2' href='/'>
-        Sporty Blog
-      </a>
-      <p class='text-lg text-grayDark'>
-        An awesome boot camp project by four engineers!
-      </p>
-      <p>{{message}}</p>
-    </div>
-  </header>
+    <!-- Text Header -->
+    <header class='w-full container mx-auto'>
+      <div class='flex flex-col items-center py-10'>
+        <a
+          class='font-bold text-grayDark uppercase opacity-90 hover:opacity-100 transition-all duration-200 ease-in-out text-5xl pb-2'
+          href='/'
+        >
+          Sporty Blog
+        </a>
+        <p class='text-lg text-grayDark'>
+          An awesome boot camp project by four engineers!
+        </p>
+        <p>{{message}}</p>
+      </div>
+    </header>
 
-  {{{body}}}
-      {{#if loggedIn}}
+    {{{body}}}
+    {{#if loggedIn}}
       <script src='/js/logout.js'></script>
     {{/if}}
-</body>
+  </body>
 </html>

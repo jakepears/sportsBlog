@@ -1,0 +1,20 @@
+C:\Users\drawe\Desktop\codebuilds\sportsBlog
+├── config
+├── controllers
+|  └── api
+├── db
+├── models
+├── public
+|  ├── css
+|  ├── imgs
+|  └── js
+├── seeds
+├── utils
+└── views
+   ├── auth
+   ├── layouts
+   └── partials
+
+directory: 732
+
+ignored: directory (41)

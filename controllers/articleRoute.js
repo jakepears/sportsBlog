@@ -5,7 +5,6 @@ const { withGuard } = require('../utils/authGuard');
 // Route for the posts page
 router.get('/', async (req, res) => {
   try {
-    // Fetch all posts with associated User and Comment data
     const postData = await Posts.findAll({
       include: [
         { model: Users, as: 'user' },
@@ -15,14 +14,12 @@ router.get('/', async (req, res) => {
           include: [{ model: Users, as: 'user' }],
         },
       ],
-      order: [['createdAt', 'DESC']], // Order posts by creation date in descending order
+      order: [['createdAt', 'DESC']],
     });
 
-    // Convert the fetched posts to plain JavaScript objects
     const posts = postData.map((post) => post.get({ plain: true }));
 
-    // Render the posts template with the fetched posts and login status
-    res.render('posts', {
+    res.render('home', {
       posts,
       loggedIn: req.session.logged_in,
     });
@@ -32,9 +29,8 @@ router.get('/', async (req, res) => {
 });
 
 // Route for the article page
-router.get('/article', async (req, res) => {
+router.get('/article/:id', async (req, res) => {
   try {
-    // Fetch a specific post by its ID with associated User and Comment data
     const postData = await Posts.findByPk(req.params.id, {
       include: [
         { model: Users, as: 'user' },
@@ -47,10 +43,7 @@ router.get('/article', async (req, res) => {
     });
 
     if (postData) {
-      // If the post exists, convert it to a plain JavaScript object
       const post = postData.get({ plain: true });
-
-      // Render the article template with the fetched post and login status
       res.render('article', {
         post,
         loggedIn: req.session.logged_in,
