@@ -16,7 +16,7 @@ router.post('/', withGuard, async (req, res) => {
       content,
       user_id: req.session.user_id,
     });
-    res.redirect('/posts'); 
+    res.redirect('/newPost'); 
   } catch (err) {
     res.status(400).json(err);
   }
