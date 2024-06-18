@@ -1,14 +1,14 @@
 [
-    {
-      "name": "John Doe",
-      "email": "johndoe@gmail.com",
-      "password": "password123",
-      "profilePicture": "path/to/john-profile-picture.jpg"
-    },
-    {
-      "name": "Jane Smith",
-      "email": "jane@example.com",
-      "password": "password456",
-      "profilePicture": "path/to/jane-profile-picture.jpg"
-    }
-  ]
+  {
+    "name": "John Doe",
+    "email": "johndoe@gmail.com",
+    "password": "password123",
+    "profilePicture": "path/to/john-profile-picture.jpg"
+  },
+  {
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "password": "password456",
+    "profilePicture": "path/to/jane-profile-picture.jpg"
+  }
+]
