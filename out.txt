@@ -1,0 +1,2 @@
+img fails on sign up,
+show crud actions,

@@ -42,7 +42,6 @@ app.use(session(sess));
 app.engine('handlebars', exphbs.engine);
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
-
 app.use('/article', articleRoutes);
 app.use('/posts', postRoutes);
 app.use(express.json());

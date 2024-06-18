@@ -16,7 +16,7 @@ router.post('/', withGuard, async (req, res) => {
       content,
       user_id: req.session.user_id,
     });
-    res.redirect('/posts'); 
+    res.redirect('/posts');
   } catch (err) {
     res.status(400).json(err);
   }
@@ -31,11 +31,17 @@ router.get('/', async (req, res) => {
         {
           model: Comments,
           as: 'comments',
-          include: [{ model: Users, as: 'user', attributes: ['name', 'profilePicture'] }],
+          include: [
+            {
+              model: Users,
+              as: 'user',
+              attributes: ['name', 'profilePicture'],
+            },
+          ],
         },
       ],
     });
-    res.render('partials/posts', { posts: postsData });
+    res.json(postsData);
   } catch (err) {
     console.error('Get All Posts Error:', err);
     res.status(500).render('error', { message: 'Internal Server Error' });
@@ -51,7 +57,13 @@ router.get('/:id', async (req, res) => {
         {
           model: Comments,
           as: 'comments',
-          include: [{ model: Users, as: 'user', attributes: ['name', 'profilePicture'] }],
+          include: [
+            {
+              model: Users,
+              as: 'user',
+              attributes: ['name', 'profilePicture'],
+            },
+          ],
         },
       ],
     });
@@ -59,7 +71,7 @@ router.get('/:id', async (req, res) => {
       res.status(404).json({ message: 'No post found with this id' });
       return;
     }
-    res.render('partials/posts', { posts: [postsData] }); 
+    res.render('partials/posts', { posts: [postsData] });
   } catch (err) {
     console.error('Get Single Post Error:', err);
     res.status(500).render('error', { message: 'Internal Server Error' });
@@ -76,11 +88,13 @@ router.put('/:id', withGuard, async (req, res) => {
       return;
     }
     if (postsData.user_id !== req.session.user_id) {
-      res.status(403).json({ message: 'You are not authorized to update this post' });
+      res
+        .status(403)
+        .json({ message: 'You are not authorized to update this post' });
       return;
     }
     await postsData.update({ title, content });
-    res.redirect('/posts'); 
+    res.redirect('/posts');
   } catch (err) {
     res.status(400).json(err);
   }
@@ -95,11 +109,13 @@ router.delete('/:id', withGuard, async (req, res) => {
       return;
     }
     if (postsData.user_id !== req.session.user_id) {
-      res.status(403).json({ message: 'You are not authorized to delete this post' });
+      res
+        .status(403)
+        .json({ message: 'You are not authorized to delete this post' });
       return;
     }
     await postsData.destroy();
-    res.redirect('/posts'); 
+    res.redirect('/posts');
   } catch (err) {
     res.status(500).json(err);
   }
