@@ -62,3 +62,5 @@ sequelize
   .catch((err) => {
     console.error('Error synchronizing models:', err);
   });
+
+// Comment for push
