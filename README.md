@@ -63,7 +63,7 @@ This project is licensed under the MIT License.
 
 ## Screenshots
 
-<img src='./public/imgs/sporty.png' />
+<img src='./public/imgs/Screenshot 2024-07-18 153218.png' />
 
 ## Deployed Application
-You can access the deployed version of Sporty at [https://sporty-app.herokuapp.com](https://sporty-blog-2877962c9924.herokuapp.com/).
+You can access the deployed version of Sporty at [<h1>📓<h1>](https://sport-blog-48839df84095.herokuapp.com/)
