@@ -1,12 +1,7 @@
-const express = require('express');
-const router = express.Router();
-
-// Imported route files
-const userRoutes = require('./usersRoutes');
-const postRoutes = require('./postRoutes');
-const commentRoutes = require('./commentsRoutes');
-
-// Mounted the routes on specific paths
+const router = require('express').Router();
+const userRoutes = require('./user-routes.js');
+const postRoutes = require('./post-routes');
+const commentRoutes = require('./comment-routes');
 router.use('/users', userRoutes);
 router.use('/posts', postRoutes);
 router.use('/comments', commentRoutes);

@@ -1,52 +1,34 @@
-// Import the required models
-const Users = require('./Users');
-const Posts = require('./Posts');
-const Comments = require('./Comments');
+const User = require('./User');
+const Post = require('./Post');
+const Comment = require('./Comment');
 
-// Define the associations between the models
-
-// A user can have multiple posts (One-to-Many)
-Users.hasMany(Posts, {
-  foreignKey: 'user_id',    // The foreign key in the Posts model that references the Users model
-  onDelete: 'CASCADE',      // Delete all associated posts when a user is deleted
+User.hasMany(Post, {
+    foreignKey: 'user_id'
 });
 
-// A post belongs to a single user (One-to-One)
-Posts.belongsTo(Users, {
-  foreignKey: 'user_id',
-  as: 'user',
-  include: ['profilePicture'],   
+Post.belongsTo(User, {
+    foreignKey: 'user_id',
+    onDelete: "cascade"
 });
 
-// A user can have multiple comments (One-to-Many)
-Users.hasMany(Comments, {
-  foreignKey: 'user_id',    // The foreign key in the Comments model that references the Users model
-  onDelete: 'CASCADE',
+Comment.belongsTo(User, {
+    foreignKey: 'user_id',
+    onDelete: "cascade"
 });
 
-// A comment belongs to a single user (One-to-One)
-Comments.belongsTo(Users, {
-  foreignKey: 'user_id',
-  as: 'user',
-  include: ['profilePicture'],    
+Comment.belongsTo(Post, {
+    foreignKey: 'post_id',
+    onDelete: "cascade"
 });
 
-// A post can have multiple comments (One-to-Many)
-Posts.hasMany(Comments, {
-  foreignKey: 'post_id',    // The foreign key in the Comments model that references the Posts model
-  as: 'comments',
-  onDelete: 'CASCADE',      
+User.hasMany(Comment, {
+    foreignKey: 'user_id',
+    onDelete: "cascade"
 });
 
-// A comment belongs to a single post (One-to-One)
-Comments.belongsTo(Posts, {
-  foreignKey: 'post_id',
-  as: 'post',    
-});
+Post.hasMany(Comment, {
+    foreignKey: 'post_id',
+    onDelete: "cascade"
+})
 
-// Export the models
-module.exports = {
-  Users,
-  Posts,
-  Comments,
-};
+module.exports = { User, Post, Comment };

@@ -1,26 +1,11 @@
 const router = require('express').Router();
-const upload = require('../config/multerConfig');
-
-// Import individual route files
-const uploadController = require('./uploadController');
-const profileController = require('./profileController');
-const homeRoutes = require('./homeRoute');
-const articleRoutes = require('./articleRoute');
-const apiRoutes = require('./api/');
-
-// Home routes
-router.use('/', homeRoutes);
-
-// Dashboard routes
-router.use('/', articleRoutes);
-
-// API routes
+const apiRoutes = require('./api');
+const homeRoutes = require('./home-routes.js');
+const dashboardRoutes = require('./dashboard-routes.js');
 router.use('/api', apiRoutes);
-
-// Upload route
-router.post('/upload', upload.single('profilePic'), uploadController.uploadProfilePicture);
-
-// Profile route
-router.get('/profile', profileController.getProfile); 
-
+router.use('/', homeRoutes);
+router.use('/dashboard', dashboardRoutes);
+router.use((req, res) => {
+    res.status(404).end();
+});
 module.exports = router;
