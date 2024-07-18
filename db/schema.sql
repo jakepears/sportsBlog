@@ -1,2 +1,3 @@
-DROP DATABASE IF EXISTS sportblog_db;
-CREATE DATABASE sportblog_db;
+DROP DATABASE IF EXISTS sport_blog;
+
+CREATE DATABASE sport_blog;

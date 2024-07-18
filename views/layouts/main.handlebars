@@ -1,50 +1,85 @@
-<html lang='en'>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset='UTF-8' />
-  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-  <link rel='stylesheet' href='/css/styles.css' />
-  <title>Sporty</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sport Blog</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
-<body class='bg-grayLight'>
-  <!-- Top Bar Nav -->
-  <nav class='w-full py-4 bg-grayDark betterShadow'>
-    <div class='w-full container mx-auto flex flex-wrap items-center justify-around'>
-      <nav>
-        <ul class='flex items-center justify-between font-bold text-sm text-grayLight bg-none uppercase no-underline'>
-          <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/'>Home</a></li>
-          <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/api/posts'>Posts</a></li>
-          {{#if loggedIn}}
-            <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/article'>Article</a></li>
-            <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/posts'>Create Post</a></li>
-            <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' id="logout" href='/logout'>Logout</a></li>
-          {{else}}
-            <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/login'>Login</a></li>
-            <li class='px-4'><a class='transition-colors hoverUnderline duration-200 px-1' href='/signup'>Signup</a></li>
-          {{/if}}
-        </ul>
-      </nav>
-    </div>
-  </nav>
 
-    <!-- Text Header -->
-    <header class='w-full container mx-auto'>
-      <div class='flex flex-col items-center py-10'>
-        <a
-          class='font-bold text-grayDark uppercase opacity-90 hover:opacity-100 transition-all duration-200 ease-in-out text-5xl pb-2'
-          href='/'
-        >
-          Sporty Blog
-        </a>
-        <p class='text-lg text-grayDark'>
-          An awesome boot camp project by four engineers!
-        </p>
-        <p>{{message}}</p>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <div class="header-top">
+        <h1><span class="logo">Sport Blog</span></h1>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="/">Home</a></li>
+            {{#if loggedIn}}
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/" id="logout">Logout</a></li>
+            {{else}}
+            <li><a href="/login">Login</a></li>
+            {{/if}}
+          </ul>
+        </nav>
       </div>
-    </header>
+    </div>
+  </header>
 
-    {{{body}}}
-    {{#if loggedIn}}
-      <script src='/js/logout.js'></script>
-    {{/if}}
-  </body>
+  <div class="container main-content">
+    <div class="row">
+      <div class="{{#if isDashboard}}col-md-12{{else}}col-md-8{{/if}}">
+        <main>
+          {{{ body }}}
+        </main>
+      </div>
+      {{#unless isDashboard}}
+      <div class="col-md-4">
+        <aside class="sidebar">
+          <h3>Sports Categories</h3>
+          <div class="sports-images">
+            <a href="/nfl" class="sport-link">
+              <img src="https://images.unsplash.com/flagged/photo-1576552308911-9096e1029bd3?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="NFL" class="sport-img">
+            </a>
+            <a href="/nba" class="sport-link">
+              <img src="https://images.unsplash.com/photo-1584770557404-a5d2a798e81a?q=80&w=2647&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="NBA" class="sport-img">
+            </a>
+            <a href="/mlb" class="sport-link">
+              <img src="https://images.unsplash.com/photo-1624375664562-fff61869fe8f?q=80&w=2662&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="MLB" class="sport-img">
+            </a>
+            <a href="/nhl" class="sport-link">
+              <img src="https://images.unsplash.com/photo-1714841197541-aa64d90cb6a8?q=80&w=2616&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Tennis" class="sport-img">
+            </a>
+            <a href="/more" class="sport-link">
+              <img src="https://images.unsplash.com/photo-1585345379481-46246846403a?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="More Sports" class="sport-img">
+            </a>
+            <a href="/more" class="sport-link">
+              <img src="https://images.unsplash.com/photo-1691006965709-ead2a22e22af?q=80&w=2664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="More Sports" class="sport-img">
+            </a>
+          </div>
+        </aside>
+      </div>
+      {{/unless}}
+    </div>
+  </div>
+
+  <footer class="main-footer">
+    <div class="container">
+      <p>
+        Sport Blog by <a href="https://github.com/AliyusUnderwood">Aliyus Underwood</a>,
+        <a href="https://github.com/jakepears">Jake Pearson</a>, <a href="https://github.com/mbyford49">Mike Byford</a>,
+        <a href="https://github.com/Edesp1">Eduardo Lopez</a>
+      </p>
+    </div>
+  </footer>
+
+  {{#if loggedIn}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+  <script src="/js/logout.js"></script>
+  {{/if}}
+</body>
 </html>
